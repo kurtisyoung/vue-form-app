@@ -1,6 +1,6 @@
 # Vue Form App
 
-Built with `Vue` and `Nuxt JS`. The overall idea was to make as many reusable `Vue` components as possible so the code is DRY (Don't Repeat Yourself). This project will generate static pages on build.
+Built with `Vue` and `Nuxt JS`. I kept the code as DRY (Don't Repeat Yourself) as possible by creating generic reusable `Vue` Components. This project will generate static pages on build.
 
 I used `Airtable` as the database. Here is an overview of the database structure:
 
