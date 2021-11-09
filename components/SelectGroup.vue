@@ -1,7 +1,7 @@
 <template>
   <div class="select-group">
     <Label :forLabel="selectId" :label="label" />
-    <v-select v-model="selected" :inputId="selectId" :placeholder="placeholder" :options="options" @input="onChange" />
+    <v-select v-model="selected" ref="dropdown" :inputId="selectId" :placeholder="placeholder" :options="options" @input="onChange" />
   </div>
 </template>
 
@@ -27,6 +27,7 @@ export default {
   methods: {
     onChange(val) {
       this.$emit("input", val)
+      this.$refs.dropdown.$el.querySelector('.vs__dropdown-toggle').style.borderColor = '#899298';
     }
   }
 }

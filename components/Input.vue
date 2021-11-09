@@ -3,18 +3,20 @@
     <Label :label="label"/>
     <textarea 
       v-if="type === 'textarea'"
+      ref="input"
       :name="name"
       :placeholder="placeholder"
     />
     <input
       v-else
+      ref="input"
       :name="name"
       :type="type"
       :placeholder="placeholder"
       v-model="inputValue"
       @input="onChange"
     />
-    <Checkbox v-if="confirmContent && inputChanged" label="Yes, I confirm that the content I submit is authored by me."  />
+    <Checkbox v-if="confirmContent && inputChanged" name="confirmContent" label="Yes, I confirm that the content I submit is authored by me."  />
   </span>
 </template>
 
@@ -45,6 +47,7 @@ export default {
     onChange() {
       if(this.inputValue) {
         this.inputChanged = true;
+        this.$refs.input.style.borderColor = '#899298';
       } else {
         this.inputChanged = false;
       }

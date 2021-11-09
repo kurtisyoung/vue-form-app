@@ -3,8 +3,8 @@
     <p>{{ message }}</p>
     <label v-for="radio in radioList" :key="radio" :for="radio" class="radio-input">
       {{ radio }}
-      <input :name="name" :id="radio" type="radio" :value="radio"/>
-      <span class="checkmark"/>
+      <input :name="name" :id="radio" type="radio" :value="radio" @input="onChange"/>
+      <span ref="radiobox" class="checkmark"/>
     </label>
   </div>
 </template>
@@ -15,6 +15,12 @@ export default {
     name: String,
     message: String,
     radioList: []
+  },
+  methods: {
+    onChange() {
+      this.$refs.radiobox[0].style.borderColor = '#008980';
+      this.$refs.radiobox[1].style.borderColor = '#008980';
+    }
   }
 }
 </script>
