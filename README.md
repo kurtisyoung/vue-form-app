@@ -1,4 +1,6 @@
-# vue-form-app
+# Vue Form App
+
+Built with Vue and Nuxt. The `Airtable API Key` will be provided upon request.
 
 ## Build Setup
 

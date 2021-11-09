@@ -13,6 +13,10 @@
   text-align: center;
   justify-content: center;
   align-items: center;
+  padding: 75px 20px;
+  @media only screen and (min-width: 768px) {
+    padding-bottom: 130px;
+  }
 }
 img {
   height: 126px;

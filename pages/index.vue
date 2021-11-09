@@ -5,7 +5,7 @@
     <div class="form-card max-w-4xl mx-auto md:px-6 lg:px-8 bg-white overflow-hidden">
       <div v-if="!submitted" class="p-6">
         <h3 class="sub-title">Seller Application</h3>
-        <Form />
+        <Form @clicked="onSubmit"/>
       </div>
       <ThankYou v-if="submitted" />
     </div>
@@ -18,6 +18,11 @@ export default {
   data() {
     return {
       submitted: false
+    }
+  },
+  methods: {
+    onSubmit(value) {
+      this.submitted = value;
     }
   }
 }

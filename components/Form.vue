@@ -2,18 +2,11 @@
   <form id="form" @submit.prevent="onSubmit">
     <TabWrapper>
       <Tab :selected="true">
-         <h4 class="text-2xl">
-          Share your work with us
-        </h4>
+         <h4 class="text-2xl">Share your work with us</h4>
         <p class="mt-3 mb-3">
           To ensure the the quality of our marketplace, we limit our seller community to the most qualified creators. Let our curators know why you’d be a great seller:
         </p>
-        <p v-if="errors.length" class="errors">
-          <span style="font-weight: 600; color: red;">Please correct the following error(s):</span>
-          <ul>
-            <li v-for="error in errors" :key="error" style="color: red; font-size: 14px;">{{ error }}</li>
-          </ul>
-        </p>
+        <Errors v-if="errors.length" :errors="errors" />
         <div class="flex flex-row input-row">
           <Input
             name="firstName"
@@ -56,18 +49,9 @@
         />
       </Tab>
       <Tab>
-        <h4 class="text-2xl">
-          Tell us a little about yourself
-        </h4>
-        <p class="mt-3 mb-3">
-          Your answers will help us provide you with a more personalized experience as a seller!
-        </p>
-        <p v-if="errors.length" class="errors">
-          <span style="font-weight: 600; color: red;">Please correct the following error(s):</span>
-          <ul>
-            <li v-for="error in errors" :key="error" style="color: red; font-size: 14px;">{{ error }}</li>
-          </ul>
-        </p>
+        <h4 class="text-2xl">Tell us a little about yourself</h4>
+        <p class="mt-3 mb-3">Your answers will help us provide you with a more personalized experience as a seller!</p>
+        <Errors v-if="errors.length" :errors="errors" />
         <SelectGroup 
           selectId="qualityQuestion"
           label="When creating products, which best describes your perspective on quality?"
@@ -166,6 +150,7 @@ export default {
           }
           records.forEach(record => {
             console.log(record.getId())
+            this.$emit('clicked', true);
           });
         });
         return true;
@@ -202,8 +187,6 @@ export default {
         this.errors.push('Online stores I sell on today is required');
         e.target.elements.onlineStoresISellToday.style.borderColor = 'red';
       }
-
-      
     }
   }
 }
