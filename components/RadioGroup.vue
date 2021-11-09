@@ -3,7 +3,7 @@
     <p>{{ message }}</p>
     <label v-for="radio in radioList" :key="radio" :for="radio" class="radio-input">
       {{ radio }}
-      <input :name="name" :id="radio" type="radio"/>
+      <input :name="name" :id="radio" type="radio" :value="radio"/>
       <span class="checkmark"/>
     </label>
   </div>

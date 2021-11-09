@@ -1,9 +1,5 @@
 <template>
-  <form
-    id="form"
-    action="https://test.com"
-    method="post"
-  >
+  <form id="form" @submit.prevent="onSubmit">
     <TabWrapper>
       <Tab :selected="true">
          <h4 class="text-2xl">
@@ -13,27 +9,28 @@
           To ensure the the quality of our marketplace, we limit our seller community to the most qualified creators. Let our curators know why you’d be a great seller:
         </p>
         <div class="flex flex-row input-row">
-          <Input 
-            v-model="firstName"
+          <Input
+            name="firstName"
             label="First Name"
             type="text"
             col="6"
           />
-          <Input 
-            v-model="lastName"
+          <Input
+            name="lastName"
             label="Last Name"
             type="text"
             col="6"
           />
         </div>
-        <SelectGroup 
-          selectId="category"
+        <SelectGroup
+          selectId="shopCategory"
           label="Your Shop Category"
           placeholder="Select Category"
+          ref="categorySelected"
           :options="categoryOptions"
         />
         <Input
-          v-model="portfolioLink"
+          name="portfolioLink"
           label="Porfolio Link"
           type="text"
           :confirmContent="true"
@@ -45,7 +42,7 @@
           :radioList="radioList"
         />
         <Input
-          v-model="textarea"
+          name="onlineStoresISellToday"
           label="Online stores I sell on today"
           placeholder="Enter urls"
           type="textarea"
@@ -60,21 +57,24 @@
           Your answers will help us provide you with a more personalized experience as a seller!
         </p>
         <SelectGroup 
-          selectId="quality"
+          selectId="qualityQuestion"
           label="When creating products, which best describes your perspective on quality?"
           placeholder="Select Answer"
+          ref="qualitySelected"
           :options="qualityOptions"
         />
         <SelectGroup 
-          selectId="online"
+          selectId="onlineSellerQuestion"
           label="How would you describe your experience level as an online seller?"
           placeholder="Select Answer"
+          ref="onlineSelected"
           :options="onlineOptions"
         />
         <SelectGroup 
-          selectId="business"
+          selectId="businessMarketingQuestion"
           label="How would you describe your understanding of business and marketing?"
           placeholder="Select Answer"
+          ref="businessSelected"
           :options="businessOptions"
         />
       </Tab>
@@ -83,14 +83,13 @@
 </template>
 
 <script>
+import Airtable from 'airtable';
+import { AIRTABLE_API_KEY } from '../env';
+const base = new Airtable({apiKey: AIRTABLE_API_KEY}).base('appyAikWHmqPVkRsd');
+
 export default {
   data() {
     return {
-      errors: [],
-      firstName: "",
-      lastName: "",
-      portfolioLink: "",
-      textarea: "",
       radioList: [ 'Yes', 'No' ],
       categoryOptions: ['Graphics', 'Fonts', 'Templates', 'Add-ons', 'Photos', 'Web Themes', '3D'],
       qualityOptions: [
@@ -113,6 +112,33 @@ export default {
         'I’m vaguely aware of basic business & marketing concepts',
         'I’m not interested in understanding business & marketing'
       ],
+    }
+  },
+  methods: {
+    onSubmit(e) {
+      base('Sellers').create([
+        {
+          'fields': {
+            firstName: e.target.elements.firstName.value,
+            lastName: e.target.elements.lastName.value,
+            shopCategory: this.$refs.categorySelected.$el.children[1].children[0].children[0].children[0].innerText,
+            portfolioLink: e.target.elements.portfolioLink.value,
+            onlineStore: e.target.elements.onlineStore.value,
+            onlineStoresISellToday: e.target.elements.onlineStoresISellToday.value,
+            qualityQuestion: this.$refs.qualitySelected.$el.children[1].children[0].children[0].children[0].innerText,
+            onlineSellerQuestion: this.$refs.onlineSelected.$el.children[1].children[0].children[0].children[0].innerText,
+            businessMarketingQuestion: this.$refs.businessSelected.$el.children[1].children[0].children[0].children[0].innerText
+          }
+        }
+      ], (err, records) => {
+        if(err) {
+          console.error(err);
+          return;
+        }
+        records.forEach(record => {
+          console.log(record.getId())
+        });
+      });
     }
   }
 }

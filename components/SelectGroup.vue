@@ -1,7 +1,7 @@
 <template>
   <div class="select-group">
     <Label :forLabel="selectId" :label="label" />
-    <v-select :inputId="selectId" :placeholder="placeholder" :options="options" />
+    <v-select v-model="selected" :inputId="selectId" :placeholder="placeholder" :options="options" @input="onChange" />
   </div>
 </template>
 
@@ -13,11 +13,21 @@ export default {
   components: {
     vSelect
   },
+  data() {
+    return {
+      selected: ""
+    }
+  },
   props: {
     selectId: String,
     label: String,
     placeholder: String,
     options: []
+  },
+  methods: {
+    onChange(val) {
+      this.$emit("input", val)
+    }
   }
 }
 </script>

@@ -3,15 +3,14 @@
     <Label :label="label"/>
     <textarea 
       v-if="type === 'textarea'"
-      :id="label"
+      :name="name"
       :placeholder="placeholder"
-      v-model="inputValue"
     />
     <input
       v-else
-      :id="label"
+      :name="name"
       :type="type"
-      :placeholder="placeholder" 
+      :placeholder="placeholder"
       v-model="inputValue"
       @input="onChange"
     />
@@ -20,11 +19,6 @@
 </template>
 
 <script>
-// :value="value"
-//       @input="$emit('update:value', $event.target.value)"
-
-// :value="value"
-//       @input="$emit('update:value', $event.target.value);onChange()" 
 export default {
   name: 'Input',
   data() {
@@ -36,7 +30,7 @@ export default {
   props: {
     label: String, 
     type: String,
-    value: String,
+    name: String,
     placeholder: String,
     col: {
       type: String,
@@ -49,7 +43,6 @@ export default {
   },
   methods:{
     onChange() {
-      console.log(this.inputValue)
       if(this.inputValue) {
         this.inputChanged = true;
       } else {
