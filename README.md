@@ -18,7 +18,7 @@ I used `Airtable` as the database. Here is an overview of the database structure
 }
 ```
 
-The `AIRTABLE_API_KEY` env variable will be provided upon request.
+The `AIRTABLE_API_KEY` will be provided upon request.
 
 ## Build Setup
 
